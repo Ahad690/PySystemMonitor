@@ -69,6 +69,9 @@ The following table compares the Reference System (Windows Task Manager) with th
 | **Historical Data** | Short-term graphs | **Session-based Analytics & Logs** |
 | **Data Export** | distinct tools required (perfmon) | **Built-in CSV/JSON Export** |
 | **Platform** | Windows Only | **Cross-Platform (Windows/Linux/macOS)** |
+| **Performance Characteristics** | Minimal overhead, native OS integration | Python runtime overhead, efficient polling with configurable intervals |
+| **Resource Usage** | Very low memory footprint (~10-20 MB), integrated with OS | Moderate memory usage (~30-50 MB), standalone application |
+| **Security & Reliability** | Built into OS, highly secure, system-level access | Requires appropriate user permissions, cross-platform reliability, error handling for process access |
 
 ---
 
