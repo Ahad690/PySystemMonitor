@@ -2,8 +2,7 @@
 
 **PySystemMonitor-PS** is a native PowerShell port of the PySystemMonitor project. It provides a comprehensive system monitoring solution with both a terminal-based interface (CLI) and a modern, real-time Web Dashboard.
 
-![Dashboard Preview](dashboard/screenshot_placeholder.png) 
-*(Note: Screenshot available in walkthrough artifacts)*
+![Dashboard Preview](dashboard/GUI.png)
 
 ## 🚀 Key Features
 

@@ -121,10 +121,10 @@ $killBtn.ForeColor = [System.Drawing.Color]::White
 $killBtn.Add_Click({
     $selected = $procList.SelectedItem
     if ($selected) {
-        $pid = ($selected -split '\s+')[0]
+        $processId = ($selected -split '\s+')[0]
         try {
-            Stop-Process -Id $pid -Force -ErrorAction Stop
-            [System.Windows.Forms.MessageBox]::Show("Process $pid terminated!", "Success")
+            Stop-Process -Id $processId -Force -ErrorAction Stop
+            [System.Windows.Forms.MessageBox]::Show("Process $processId terminated!", "Success")
         } catch {
             [System.Windows.Forms.MessageBox]::Show("Failed: $_", "Error")
         }
