@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PySystemMonitor Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>PySystemMonitor-PS <sub>Native PowerShell Edition</sub></h1>
+            <div id="timestamp" class="timestamp">--:--:--</div>
+        </header>
+
+        <div class="grid">
+            <!-- CPU & Memory Gauges -->
+            <div class="card">
+                <h2>CPU Usage</h2>
+                <div class="gauge-container">
+                    <canvas id="cpuChart"></canvas>
+                    <div class="gauge-value" id="cpuValue">0%</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Memory Usage</h2>
+                <div class="gauge-container">
+                    <canvas id="memChart"></canvas>
+                    <div class="gauge-value" id="memValue">0%</div>
+                </div>
+                <div class="stats-row">
+                    <span id="memUsed">0 GB</span> / <span id="memTotal">0 GB</span>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="card">
+                <h2>Network</h2>
+                <div class="stat-box">
+                    <div class="stat-label">Upload</div>
+                    <div class="stat-value" id="netUp">0 KB/s</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Download</div>
+                    <div class="stat-value" id="netDown">0 KB/s</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Disk I/O</h2>
+                <div class="stat-box">
+                    <div class="stat-label">Read</div>
+                    <div class="stat-value" id="diskRead">0 KB/s</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Write</div>
+                    <div class="stat-value" id="diskWrite">0 KB/s</div>
+                </div>
+            </div>
+
+            <!-- Health -->
+            <div class="card health-card" id="healthCard">
+                <h2>System Health</h2>
+                <div class="health-score" id="healthScore">100</div>
+                <div class="health-status" id="healthStatus">Good</div>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <!-- Processes -->
+            <div class="card wide">
+                <h2>Top Processes</h2>
+                <table id="procTable">
+                    <thead>
+                        <tr>
+                            <th>PID</th>
+                            <th>Name</th>
+                            <th>CPU</th>
+                            <th>Memory %</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <!-- Alerts -->
+            <div class="card wide">
+                <h2>System Alerts & Security Events</h2>
+                <div id="alertList" class="alert-list"></div>
+            </div>
+        </div>
+
+        <!-- New Panels for Enterprise Edition -->
+        <div class="grid-2">
+            <div class="card wide">
+                <h2>Critical Services (Lab 6)</h2>
+                <table id="serviceTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Status</th>
+                            <th>Start Type</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div class="card wide">
+                <h2>Agentic Insights (Lab 8)</h2>
+                <div id="recList" class="alert-list"></div>
+            </div>
+        </div>
+
+        <!-- Command Modal -->
+        <div id="cmdModal" class="modal hidden">
+            <div class="modal-content">
+                <h3 id="modalTitle">Command Status</h3>
+                <p id="modalMsg">Processing...</p>
+                <button onclick="closeModal()">OK</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="app.js"></script>
+
+    <!-- Data Loader - This will refresh periodically -->
+    <script id="dataLoader"></script>
+</body>
+
+</html>

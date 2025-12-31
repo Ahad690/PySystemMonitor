@@ -1,90 +1,118 @@
-# PySystemMonitor 🖥️
+# PySystemMonitor-PS ⚡
 
-**PySystemMonitor** is a comprehensive, cross-platform system monitoring and process management tool written in Python. It is designed to provide real-time insights into system performance, health analytics, and resource usage with both a rich Graphical User Interface (GUI) and a lightweight Command-Line Interface (CLI).
+**PySystemMonitor-PS** is a native PowerShell port of the PySystemMonitor project. It provides a comprehensive system monitoring solution with both a terminal-based interface (CLI) and a modern, real-time Web Dashboard.
+
+![Dashboard Preview](dashboard/screenshot_placeholder.png) 
+*(Note: Screenshot available in walkthrough artifacts)*
 
 ## 🚀 Key Features
 
-*   **Real-Time Monitoring**: Track CPU, Memory (RAM/Swap), Disk I/O, and Network traffic in real-time.
+*   **Native PowerShell**: Written entirely in PowerShell (`.ps1`), requiring no external Python dependencies.
 *   **Dual Interfaces**:
-    *   **GUI**: A modern, dark-themed dashboard built with Tkinter for visualizing system metrics.
-    *   **CLI**: A terminal-based interactive dashboard for headless environments or quick checks.
-*   **Process Manager**: View, search, and manage active processes. Supports killing, suspending, and resuming processes.
-*   **System Health Score**: An intelligent scoring system (0-100) that analyzes resource trends and stability to provide an overall system health rating and actionable recommendations.
-*   **Smart Alerts**: Configurable thresholds for CPU, Memory, and Disk usage with visual notifications and logging.
-*   **Historical Analytics**: prediction of resource exhaustion and trend analysis (e.g., "CPU usage is increasing").
-*   **Data Export**: Built-in capability to export performance logs to CSV or JSON formats for offline analysis.
+    *   **CLI Dashboard**: Colorful, text-based real-time stats in your terminal.
+    *   **Web Dashboard**: A beautiful, dark-themed HTML5 dashboard.
+## 🚀 Enterprise Features (OS Labs 5-11)
+
+### Automation & Scripting (Lab 5 & 9)
+*   **Centralized Logging**: Structured logging module with rotation (`modules/centralized_logger.psm1`).
+*   **Job Scheduler**: Periodic task execution framework (`modules/job_scheduler.psm1`).
+*   **Safe Framework**: Error handling wrapper for all critical operations (`core/automation_framework.psm1`).
+
+### System Diagnostics (Lab 6)
+*   **Event Log Analyzer**: Detects critical system errors in the last 24h (`core/event_log_analyzer.psm1`).
+*   **Service Monitor**: Auto-checks state of critical services like Spooler, Windows Update (`core/service_monitor.psm1`).
+
+### Parallelism (Lab 7)
+*   **Background Jobs**: Non-blocking execution for long-running tasks (`modules/background_jobs.psm1`).
+
+### Agentic Intelligence (Lab 8)
+*   **Agentic Engine**: "AI" logic that recommends actions based on system state (`modules/agentic_engine.psm1`).
+
+### Security & Governance (Lab 10)
+*   **Security Monitor**: Detects disabled firewalls and missing Antivirus.
+*   **Brute Force Detection**: alerts on high frequency of failed login attempts (Event ID 4625).
+*   **User Auditing**: Tracks recent user login activity.
+
+### Advanced Operations (Lab 11)
+*   **Environment Manager**: Safe handling of system environment variables.
 
 ## 📦 Installation
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/Ahad690/PySystemMonitor.git
-    cd PySystemMonitor
-    ```
+No installation is required. Just standard PowerShell.
 
-2.  **Install dependencies:**
-    ```bash
-    pip install -r requirements.txt
+1.  **Clone/Download** this repository.
+2.  **Unblock files** (if downloaded as ZIP):
+    ```powershell
+    Get-ChildItem -Recurse | Unblock-File
     ```
 
 ## 🎮 Usage
 
-You can run PySystemMonitor in different modes depending on your needs.
+### 1. Start the Monitor
 
-### Graphical Interface (Default)
-Launch the full GUI dashboard:
-```bash
-python main.py
+**Option A: Standard Web Dashboard (Recommended)**
+```powershell
+.\PySystemMonitor.ps1
 ```
-*Navigating the GUI:*
-*   **Overview**: Summary of all system resources.
-*   **Processes**: Table of running processes. Right-click or use buttons to manage.
-*   **Performance**: Real-time graphs for CPU and Memory.
-*   **Disk/Network**: Detailed stats for storage and network adapters.
-*   **Alerts**: Log of all system alerts.
+*Runs the CLI and updates the Web Dashboard (`dashboard/index.html`).*
 
-### Command-Line Interface
-Launch the terminal-based dashboard:
-```bash
-python main.py --cli
+**Option B: Standalone GUI (Fallback)**
+```powershell
+.\PySystemMonitor-GUI.ps1
 ```
-*CLI Controls:*
-*   `R`: Refresh data
-*   `P`: Process list
-*   `K`: Kill process
-*   `H`: Health score
-*   `Q`: Quit
+*Runs a self-contained Windows Forms application. Best for demonstrations if browser access is limited.*
 
-### Background Mode
-Run without any UI (useful for logging only):
-```bash
-python main.py --no-ui
-```
+### 2. View Web Dashboard
+While the script is running, open the following file in any web browser:
+
+`dashboard/index.html`
+
+*The web dashboard updates automatically every second.*
+
+### 3. Controls (CLI)
+*   `Q`: Quit application
+*   `R`: Refresh manually
+*   `K`: Kill a process (followed by PID)
 
 ## 📂 Project Structure
 
-```
-PySystemMonitor/
-├── core/               # Data collection modules (CPU, Mem, Disk, Net)
-├── interfaces/         # GUI and CLI implementation
-├── modules/            # Analytics, Logger, Alert System
-├── utils/              # Helper functions
-├── config/             # Configuration settings
-├── logs/               # Log files storage
-├── main.py             # Entry point
-└── requirements.txt    # Project dependencies
+```text
+PySystemMonitor-PS/
+├── PySystemMonitor.ps1      # Main orchestrator script
+├── config/
+│   └── settings.psd1        # Configuration (Thresholds, Paths)
+├── core/                    # Data collection modules
+│   ├── cpu_monitor.psm1     # CPU metrics (Get-Counter)
+│   ├── memory_monitor.psm1  # Memory metrics (CIM/WMI of Win32_OperatingSystem)
+│   ├── disk_monitor.psm1    # Disk usage & I/O
+│   ├── network_monitor.psm1 # Network adapter stats
+│   └── process_manager.psm1 # Process listing & termination
+├── modules/                 # Logic modules
+│   ├── alert_system.psm1    # Threshold checking
+│   ├── logger.psm1          # File logging & JSONP export
+│   └── analytics.psm1       # Health scoring logic
+├── interfaces/
+│   └── cli.psm1             # Console UI rendering
+└── dashboard/               # Web Interface
+    ├── index.html           # Dashboard layout
+    ├── style.css            # Styling
+    ├── app.js               # Logic (Chart.js + Updates)
+    └── data.js              # Live data (Generated by PS)
 ```
 
 ## 🛠️ Configuration
 
-You can customize the application behavior in `config/settings.py`:
-*   Update intervals
-*   Alert thresholds (CPU %, Memory %)
-*   Log file settings
-*   Window dimensions
+Edit `config/settings.psd1` to change behavior:
+
+```powershell
+@{
+    UpdateInterval = 1000  # Update speed in ms
+    Alerts = @{
+        CpuUsagePercent = 85
+        MemoryUsagePercent = 90
+    }
+}
+```
 
 ## 📄 License
-This project is open-source and available for educational and personal use.
-
----
-*Developed as an Operating Systems Lab Project to demonstrate system design and resource management concepts.*
+Open Source for Educational Use.
